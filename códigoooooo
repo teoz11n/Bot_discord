@@ -1,0 +1,86 @@
+import discord
+from discord.ext import commands
+import random
+
+description = "pede alguma cois ai q eu tento te ajudar"
+
+intents = discord.Intents.default()
+intents.members = True
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', description=description, intents=intents)
+
+
+@bot.event
+async def on_ready():
+    assert bot.user is not None
+    print(f'{bot.user} online.')
+    print('------')
+
+
+@bot.command()
+async def soma(ctx, left: int, right: int):
+    resultado = left + right
+    await ctx.send(f"{left} + {right} = {resultado}. tranquilo.")
+
+
+@bot.command()
+async def decide(ctx, *choices: str):
+    if not choices:
+        await ctx.send("tu precisa me dar opção né.")
+        return
+
+    escolha = random.choice(choices)
+    await ctx.send(f"vai nesse aqui: **{escolha}**.")
+
+
+@bot.command()
+async def entrou(ctx, member: discord.Member):
+    if member.joined_at is None:
+        await ctx.send(f"{member} entrou... eu acho.")
+    else:
+        await ctx.send(f"{member} entrou em {discord.utils.format_dt(member.joined_at)}.")
+
+
+@bot.command()
+async def flamengo(ctx):
+    resposta = (
+        "pq o flamengo é o maior do mundo?\n\n"
+        "🏆 libertadores\n"
+        "🏆 brasileirão\n"
+        "🏆 copa do brasil\n"
+        "🏆 mundial\n\n"
+        "zico, adriano, gabigol...\n"
+        "maior torcida do brasil.\n\n"
+        "vc pode até discutir.\n"
+        "mas os títulos tão ai."
+    )
+    await ctx.send(resposta)
+
+
+@bot.command()
+async def musicas(ctx):
+    lista = [
+        "Metallica - Master of Puppets",
+        "Iron Maiden - The Trooper",
+        "Linkin Park - Numb",
+        "Slipknot - Duality",
+        "System of a Down - Chop Suey!",
+        "Avenged Sevenfold - Hail to the King",
+        "Black Sabbath - Paranoid",
+        "Megadeth - Symphony of Destruction",
+        "Pantera - Walk",
+        "Lamb of God - Laid to Rest"
+    ]
+
+    escolhidas = random.sample(lista, 3)
+
+    await ctx.send(
+        "3 sugestão pra tu ouvir:\n\n"
+        f"1️⃣ {escolhidas[0]}\n"
+        f"2️⃣ {escolhidas[1]}\n"
+        f"3️⃣ {escolhidas[2]}"
+    )
+
+
+bot.run("coloca teu token aqui...")
