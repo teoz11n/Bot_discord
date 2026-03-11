@@ -136,4 +136,71 @@ async def deck(ctx):
     )
 
 
-bot.run("Seu token aqui.")
+@bot.command()
+async def planeta(ctx):
+
+    finais = [
+        "depende se vc vai jogar essa embalagem ai no lixo certo.",
+        "depende se vc vai reciclar ou fingir que o planeta se resolve sozinho.",
+        "depende se tu vai fazer tua parte ou meter o loco.",
+        "depende das pequenas coisas que a gente faz todo dia."
+    ]
+
+    resposta = (
+        "🌎 **status do planeta:**\n\n""temperatura: subindo \n""plástico no oceano: demais 💀\n""florestas: diminuindo \n\n"
+        f"chance de melhorar:\n{random.choice(finais)}"
+    )
+    await ctx.send(resposta)
+
+
+@bot.command()
+async def eco_dica(ctx):
+
+    dicas = [
+        "leva uma garrafa reutilizável em vez de comprar água td hr",
+        "desliga a luz quando sair do quarto",
+        "reutiliza pote de vidro pra guardar coisa",
+        "evita usar canudo plástico",
+        "usa sacola reutilizável no mercado",
+        "tenta tomar banho mais rápido",
+        "tira carregador da tomada quando nn tiver usando",
+        "se der vai a pé ou de bike"
+    ]
+
+    dica = random.choice(dicas)
+
+    await ctx.send(" dica eco:\n" + dica)
+
+
+@bot.command()
+async def banho(ctx):
+
+    await ctx.send("🚿 quanto tempo dura teu banho? (responde só com o número em minutos)")
+
+    def check(m):
+        return m.author == ctx.author and m.channel == ctx.channel
+
+
+
+    try:
+        msg = await bot.wait_for("message", check=check, timeout=30)
+        minutos = int(msg.content)
+
+        agua = minutos * 9
+        await ctx.send(
+            f"🚿 tu fica {minutos} minutos no banho.\n\n" f"isso gasta mais ou menos **{agua} litros de água**.\n\n"
+            "se diminuir uns minutos já economiza bastante água 🌱"
+        )
+
+    except:
+        await ctx.send("demorou muito pra responder ou mandou algo que não é número 💀 tenta dnv.")
+
+
+
+
+
+
+
+
+
+bot.run("Seu código aqui.")
